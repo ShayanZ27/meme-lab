@@ -68,7 +68,12 @@ const generateMemeTemplates = async (req, res) => {
     let templates;
     try {
       // The AI might wrap JSON in markdown code blocks, strip them
-      const cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      let cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      const startIndex = cleaned.indexOf('[');
+      const endIndex = cleaned.lastIndexOf(']');
+      if (startIndex !== -1 && endIndex !== -1) {
+        cleaned = cleaned.substring(startIndex, endIndex + 1);
+      }
       templates = JSON.parse(cleaned);
     } catch (parseErr) {
       console.error('Failed to parse AI response:', content);
@@ -142,7 +147,12 @@ const createEditorData = async (req, res) => {
 
     let editorData;
     try {
-      const cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      let cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      const startIndex = cleaned.indexOf('{');
+      const endIndex = cleaned.lastIndexOf('}');
+      if (startIndex !== -1 && endIndex !== -1) {
+        cleaned = cleaned.substring(startIndex, endIndex + 1);
+      }
       editorData = JSON.parse(cleaned);
     } catch (parseErr) {
       console.error('Failed to parse AI response:', content);
