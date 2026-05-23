@@ -146,7 +146,7 @@ function HomeScreen({ onOpenEditor }) {
     <div className="min-h-screen bg-[#111111] bg-noise text-white relative overflow-hidden px-4 py-10 font-inter">
 
       {/* ── Auth Buttons / User Profile (Top Right) ── */}
-      <div className="absolute top-4 right-4 left-4 md:left-auto z-50 flex flex-wrap justify-end items-center gap-2 sm:gap-3">
+      <div className="relative md:absolute w-full md:w-auto top-0 md:top-4 right-0 md:right-4 z-50 flex flex-wrap justify-center md:justify-end items-center gap-2 sm:gap-3 mb-10 md:mb-0">
         <Link
           to="/leaderboard"
           className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black border-2 border-black px-4 py-2 font-space font-bold tracking-widest hover-brutalist brutalist-shadow transition-transform"
@@ -293,7 +293,7 @@ function HomeScreen({ onOpenEditor }) {
       <div className="hidden lg:block absolute bottom-60 right-48 text-yellow-300 text-lg animate-[wiggle_2s_ease-in-out_infinite]">⚡</div>
 
       {/* ══════════ Main Content ══════════ */}
-      <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center pt-24 md:pt-4">
+      <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center pt-4 md:pt-4">
 
         {/* ── Title ── */}
         <div className="text-center mb-8 relative">
