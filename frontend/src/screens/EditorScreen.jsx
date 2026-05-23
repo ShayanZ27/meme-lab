@@ -112,7 +112,9 @@ const EditorScreen = ({ editorData, imageBase64, onBack }) => {
     setTimeout(async () => {
       try {
         const dataURL = stageRef.current.toDataURL({ 
-          pixelRatio: 1 / scale 
+          pixelRatio: 1 / scale,
+          mimeType: 'image/jpeg',
+          quality: 0.8
         });
         const result = await uploadMeme(dataURL, token);
         if (result.success) {
@@ -163,7 +165,7 @@ const EditorScreen = ({ editorData, imageBase64, onBack }) => {
   const editingLayer = textLayers.find(l => l.id === editingId);
 
   return (
-    <div className="min-h-screen bg-[#111111] bg-noise text-white flex flex-col md:flex-row font-inter overflow-hidden">
+    <div className="min-h-screen bg-[#111111] bg-noise text-white flex flex-col md:flex-row font-inter overflow-y-auto md:overflow-hidden">
       
       {/* LEFT SIDEBAR: Controls */}
       <div className="w-full md:w-80 bg-[#111111] border-r-4 border-black p-6 flex flex-col h-auto md:h-screen overflow-y-auto shrink-0 z-20 brutalist-shadow">
@@ -273,14 +275,14 @@ const EditorScreen = ({ editorData, imageBase64, onBack }) => {
       </div>
 
       {/* MAIN EDITOR AREA */}
-      <div className="flex-1 flex flex-col relative h-screen bg-[#111111] bg-noise">
+      <div className="flex-1 flex flex-col relative h-auto md:h-screen bg-[#111111] bg-noise min-h-0">
         
         {/* Background decorations */}
         <div className="absolute top-10 right-10 text-6xl rotate-12">🔥</div>
         <div className="absolute bottom-20 left-10 text-6xl -rotate-12">💯</div>
         
         {/* Konva Canvas Container */}
-        <div className="flex-1 flex items-center justify-center p-8 relative" ref={containerRef}>
+        <div className="flex-1 flex items-center justify-center p-4 md:p-8 relative min-h-0 overflow-hidden" ref={containerRef}>
           <div 
             className="border-4 border-black overflow-hidden bg-gray-200 relative brutalist-shadow-lg"
             style={{ width: stageWidth, height: stageHeight }}
@@ -426,11 +428,11 @@ const EditorScreen = ({ editorData, imageBase64, onBack }) => {
         </div>
 
         {/* BOTTOM TOOLBAR */}
-        <div className="h-28 bg-white border-t-4 border-black flex items-center justify-between px-8 z-20 brutalist-shadow">
-          <div className="flex gap-4">
+        <div className="h-auto md:h-28 bg-white border-t-4 border-black flex flex-col md:flex-row items-stretch md:items-center justify-between p-4 md:px-8 gap-4 z-20 brutalist-shadow">
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
             <button
               onClick={addNewText}
-              className="flex items-center gap-2 bg-yellow-400 text-black border-4 border-black px-5 py-3 font-black text-xl font-space hover-brutalist brutalist-shadow transition-transform"
+              className="flex justify-center items-center gap-2 bg-yellow-400 text-black border-4 border-black px-5 py-3 font-black text-xl font-space hover-brutalist brutalist-shadow transition-transform w-full md:w-auto"
             >
               <Plus size={24} strokeWidth={3} /> ADD TEXT
             </button>
@@ -443,23 +445,23 @@ const EditorScreen = ({ editorData, imageBase64, onBack }) => {
                   fill: COLORS[Math.floor(Math.random() * COLORS.length)]
                 })));
               }}
-              className="hidden md:flex items-center gap-2 bg-black text-white border-4 border-black px-5 py-3 font-black text-xl font-space hover:bg-gray-800 hover-brutalist brutalist-shadow transition-transform"
+              className="flex justify-center items-center gap-2 bg-black text-white border-4 border-black px-5 py-3 font-black text-xl font-space hover:bg-gray-800 hover-brutalist brutalist-shadow transition-transform w-full md:w-auto"
             >
               <Shuffle size={20} strokeWidth={3} /> CHAOS MODE
             </button>
           </div>
 
-          <div className="flex gap-4 items-center">
+          <div className="flex flex-col sm:flex-row gap-4 items-stretch md:items-center w-full md:w-auto">
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 bg-pink-500 text-white border-4 border-black px-8 py-3 font-black text-2xl font-space tracking-wider hover-brutalist brutalist-shadow transition-transform"
+              className="flex justify-center items-center gap-2 bg-pink-500 text-white border-4 border-black px-8 py-3 font-black text-2xl font-space tracking-wider hover-brutalist brutalist-shadow transition-transform w-full md:w-auto"
             >
               <Download size={28} strokeWidth={3} /> EXPORT
             </button>
             
             {/* Optional Auth Cloud Save */}
             {!user ? (
-              <div className="hidden lg:flex items-center gap-3 ml-4 bg-lime-400 border-4 border-black px-4 py-2 brutalist-shadow transform rotate-1">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-3 ml-0 lg:ml-4 bg-lime-400 border-4 border-black px-4 py-2 brutalist-shadow transform rotate-1 w-full lg:w-auto">
                 <span className="font-bold text-black font-space">Save creations?</span>
                 <Link to="/signup" className="text-black hover:text-pink-600 font-black tracking-widest text-lg underline">
                   ENTER THE MEMEVERSE
@@ -469,7 +471,7 @@ const EditorScreen = ({ editorData, imageBase64, onBack }) => {
               <button
                 onClick={handleUploadToMemeverse}
                 disabled={isUploading}
-                className="flex items-center gap-2 bg-cyan-400 text-black border-4 border-black px-6 py-3 font-black text-xl font-space tracking-wider hover-brutalist brutalist-shadow transition-transform ml-2"
+                className="flex justify-center items-center gap-2 bg-cyan-400 text-black border-4 border-black px-6 py-3 font-black text-xl font-space tracking-wider hover-brutalist brutalist-shadow transition-transform ml-0 md:ml-2 w-full md:w-auto"
               >
                 <Cloud size={24} strokeWidth={3} /> {isUploading ? 'UPLOADING...' : 'RELEASE INTO THE WILD'}
               </button>
