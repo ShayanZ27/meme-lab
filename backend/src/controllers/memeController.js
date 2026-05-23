@@ -26,7 +26,7 @@ const generateMemeTemplates = async (req, res) => {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY || process.env.API_KEY}`,
       },
       body: JSON.stringify({
-        model: '~openai/gpt-latest',
+        model: 'google/gemini-2.0-pro-exp-02-05:free',
         messages: [
           {
             role: 'user',
@@ -102,7 +102,7 @@ const createEditorData = async (req, res) => {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY || process.env.API_KEY}`,
       },
       body: JSON.stringify({
-        model: '~openai/gpt-latest',
+        model: 'google/gemini-2.0-pro-exp-02-05:free',
         messages: [
           {
             role: 'user',
